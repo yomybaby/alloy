@@ -390,8 +390,9 @@ exports.generateStyleParams = function(styles,classes,id,apiName,extraStyle,theS
 
 				// assemble runtime query
 				var pcond = conditionals.platform.length > 0 ? '(' + conditionals.platform.join(' || ') + ')' : '';
-				var joinString = pcond && conditionals.formFactor ? ' && ' : '';
-				var conditional = pcond + joinString + conditionals.formFactor;
+				var fcond = conditionals.formFactor.length > 0 ? '(' + conditionals.formFactor.join(' || ') + ')' : '';
+				var joinString = pcond && fcond ? ' && ' : '';
+				var conditional = pcond + joinString + fcond;
 
 				// push styles if we need to insert a conditional
 				if (conditional) {
