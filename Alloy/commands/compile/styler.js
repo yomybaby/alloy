@@ -355,7 +355,7 @@ exports.generateStyleParams = function(styles,classes,id,apiName,extraStyle,theS
 			// manage potential runtime conditions for the style
 			var conditionals = {
 				platform: [],
-				formFactor: ''
+				formFactor: []
 			};
 
 			if (style.queries) {
@@ -376,10 +376,16 @@ exports.generateStyleParams = function(styles,classes,id,apiName,extraStyle,theS
 				}
 
 				// handle formFactor device query
-				if (q.formFactor === 'tablet') {
-					conditionals.formFactor = 'Alloy.isTablet';
-				} else if (q.formFactor === 'handheld') {
-					conditionals.formFactor = 'Alloy.isHandheld';
+				if(q.formFactor){
+					var formFactors = q.formFactor.split(',');
+					_.each(formFactors,function(f){
+						logger.info(f);
+						if(CU.CONDITION_MAP[f]){
+							conditionals.formFactor.push(CU.CONDITION_MAP[f]['runtime']);
+						}else{
+							logger.info('Warnning! Please add "'+f+'" formFactor condition in config.js');
+						}
+					});
 				}
 
 				// assemble runtime query
