@@ -1115,6 +1115,8 @@ function optimizeCompiledCode(alloyConfig, paths) {
 			exceptions.push('alloy/widgets/'+widgetName+'/styles/');
 		});
 		
+		exceptions = exceptions.concat(compileConfig.optimizingExceptions || []);
+		
 		_.each(exceptions.slice(0), function(ex) {
 			exceptions.push(path.join(titaniumFolder, ex));
 		});
